@@ -71,8 +71,9 @@ def Crop(img,x,X,y,Y):
 #Aligning the silhouettes based on their center of mass and averaging them
 def Add(old,new,center,black,i):
     center = list(center)
-    x = 160 - center[0]
-    y = 120 - center[1]
+    height, width = old.shape
+    x = (width // 2) - center[0]
+    y = (height // 2) - center[1]
     height, width = new.shape
     X, Y = (x + width), (y + height)
     a = 1.0/(i + 1)
@@ -100,7 +101,7 @@ for path in glob.glob('GaitDatasetB-silh/001/001/bg-01/090/001-bg-01-090-*.png')
     GEI = Add(GEI,cropped,center,black,i)
     i += 1
 
-#Visualising the result   
+#Visualising the result
 x,X,y,Y = Border(GEI)
 GEI = Crop(GEI,x,X,y,Y)
 cv2.imwrite('Gait_Energy_Image.png', GEI)
