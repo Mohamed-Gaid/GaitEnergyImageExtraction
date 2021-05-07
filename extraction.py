@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
+# Finding the center of mass of a silhouette
 def CenterOfMass(img):
     height, width = img.shape
     CoMR = []
@@ -29,6 +30,7 @@ def CenterOfMass(img):
     CoMY = sum(CoMC) // sum(WoC)
     return CoMX, CoMY
 
+#Finding the corner coordinates of the rectangle surrounding the silhouette
 def Border(img):
     height, width = img.shape
     index = []
@@ -61,11 +63,12 @@ def Border(img):
     Y = max(index)
     return x,X,y,Y
 
+#Cropping the silhouette based on the results from Border function
 def Crop(img,x,X,y,Y):
     Crop = img[y:Y, x:X]
     return Crop
 
-def Add(old,new,center,black,i):
+#Aligning the silhouettes based on their center of mass and averaging them
     center = list(center)
     x = 160 - center[0]
     y = 120 - center[1]
@@ -86,13 +89,15 @@ def invertt(img):
                 img[i,j] = 255 - img[i,j]
     return img
 
+#Importing the silhouettes, and getting their dimensions
 path = glob.glob('GaitDatasetB-silh/001/001/bg-01/090/001-bg-01-090-*.png')
 im = cv2.imread(path[0])
 y,x,c = im.shape
+
+#Combining the functions
 black = np.zeros((y,x), np.uint8)
 GEI = black
 i = 0
-
 for path in glob.glob('GaitDatasetB-silh/001/001/bg-01/090/001-bg-01-090-*.png'):
     image = cv2.imread(path)
     image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -102,6 +107,7 @@ for path in glob.glob('GaitDatasetB-silh/001/001/bg-01/090/001-bg-01-090-*.png')
     GEI = Add(GEI,cropped,center,black,i)
     i += 1
 
+#Visualising the result   
 x,X,y,Y = Border(GEI)
 GEI = Crop(GEI,x,X,y,Y)
 cv2.imwrite('Gait_Energy_Image.png', GEI)
