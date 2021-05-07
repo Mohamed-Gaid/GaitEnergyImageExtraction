@@ -101,7 +101,7 @@ for path in glob.glob('GaitDatasetB-silh/001/001/bg-01/090/001-bg-01-090-*.png')
     GEI = Add(GEI,cropped,center,black,i)
     i += 1
 
-#Visualising the result
+#Saving and visualising the result
 x,X,y,Y = Border(GEI)
 GEI = Crop(GEI,x,X,y,Y)
 cv2.imwrite('Gait_Energy_Image.png', GEI)
