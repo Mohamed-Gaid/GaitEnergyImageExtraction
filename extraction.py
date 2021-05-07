@@ -69,6 +69,7 @@ def Crop(img,x,X,y,Y):
     return Crop
 
 #Aligning the silhouettes based on their center of mass and averaging them
+def Add(old,new,center,black,i):
     center = list(center)
     x = 160 - center[0]
     y = 120 - center[1]
