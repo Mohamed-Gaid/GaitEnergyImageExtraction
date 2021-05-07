@@ -82,14 +82,6 @@ def Add(old,new,center,black,i):
     old[y:Y, x:X] = new
     return old
 
-def invertt(img):
-    height, width = img.shape
-    for i in range(height):
-        for j in range(width):
-            if img[i,j] != 0 :
-                img[i,j] = 255 - img[i,j]
-    return img
-
 #Importing the silhouettes, and getting their dimensions
 path = glob.glob('GaitDatasetB-silh/001/001/bg-01/090/001-bg-01-090-*.png')
 im = cv2.imread(path[0])
